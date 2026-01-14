@@ -23,18 +23,43 @@ public class Dice {
         return dieNumber;
     }
 
-    public void normalDice(){
+    public int roll(String character){
         dieNumber = (int) (Math.random() * 6) + 1;
-
-
-
+        System.out.println( character + " rolls a " + dieNumber);
+        return dieNumber;
     }
 
-    public int reroll(){
-        if (reroll > 0){
-            System.out.println("Would you like to reroll your die?\n[1]. Reroll (Current Rerolls: " + getReroll() + "\n[2]. Keep Current Die Value (" + getNumber() + ")");
+    public void reroll(int value, int rerolls, String character){
+        if (rerolls > 0){
+            System.out.println("Would you like to reroll your die?\n[1]. Reroll (Current Rerolls: " + rerolls + "\n[2]. Keep Current Die Value (" + dieNumber + ")");
             int option = scan.nextInt();
 
+            if (option == 1 && value == 1){
+                value1 = roll(character);
+            }
+
+            if (option == 1 && value == 2){
+                value2 = roll(character);
+            }
+
+            if (option == 2 && value == 1){
+                value1 = dieNumber;
+            }
+
+            if (option == 2 && value == 2){
+                value2 = dieNumber;
+            }
+
+
+
+        }else{
+            if (value == 1){
+                value1 = dieNumber;
+            }
+
+            if (value == 2){
+                value2 = dieNumber;
+            }
         }
     }
 }
