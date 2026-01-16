@@ -15,6 +15,14 @@ public class Dice {
 
     Scanner scan = new Scanner(System.in);
 
+    public int getValue1() {
+        return value1;
+    }
+
+    public int getValue2() {
+        return value2;
+    }
+
     public int getReroll() {
         return reroll;
     }
@@ -29,17 +37,31 @@ public class Dice {
         return dieNumber;
     }
 
+    public int rolling(String character){
+        dieNumber = (int) (Math.random() * 6) + 1;
+        System.out.println( character + " rerolls a " + dieNumber);
+        System.out.println("");
+        return dieNumber;
+    }
+
+    public int rollMove(){
+        dieNumber = (int) (Math.random() * 6) + 1;
+        return dieNumber;
+    }
+
     public void reroll(int value, int rerolls, String character){
         if (rerolls > 0){
-            System.out.println("Would you like to reroll your die?\n[1]. Reroll (Current Rerolls: " + rerolls + "\n[2]. Keep Current Die Value (" + dieNumber + ")");
+            System.out.println("Would you like to reroll your die?\n[1]. Reroll (Current Rerolls: " + rerolls + ")\n[2]. Keep Current Die Value (" + dieNumber + ")");
             int option = scan.nextInt();
 
             if (option == 1 && value == 1){
-                value1 = roll(character);
+                value1 = rolling(character);
+                reroll -= 1;
             }
 
             if (option == 1 && value == 2){
-                value2 = roll(character);
+                value2 = rolling(character);
+                reroll -= 1;
             }
 
             if (option == 2 && value == 1){
