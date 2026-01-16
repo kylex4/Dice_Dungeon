@@ -1,7 +1,15 @@
 import java.util.Scanner;
 
 public class Dungeon {
-    public Dungeon() {}
+    private int count;
+    private boolean gained;
+
+    // Used to count turns
+    public Dungeon() {
+        this.count = 1;
+        this.gained = false;
+    }
+
     Scanner scan = new Scanner(System.in);
 
     public void startGame(){
@@ -11,16 +19,20 @@ public class Dungeon {
         Enemy enemy = new Enemy();
         Dice dice = new Dice();
 
-        // Used to count turns
-        int count = 1;
-
         while (!player.checkDead() && !enemy.checkDead()){
+            // Ensures damage values won't carry over if an enemy or player does something that doesn't change damage value
+            player.setDamage(-1);
+            enemy.setDamage(-1);
+
             System.out.println("");
             System.out.println("•─────⋅☾Turn " + count + "☽⋅─────•");
             System.out.println("Health: " + player.getHealth() + "/" + player.getMaxHealth());
             System.out.println("Defense: " + player.getDefense());
             System.out.println("");
-            dice.getReroll(count, name);
+            dice.gainReroll(count, name, gained);
+            if (count % 3 == 0 && !gained){
+                gained = true;
+            }
             System.out.println("What will you do?");
             System.out.println("[1]. Attack " + enemy.getName());
             System.out.println("[2]. Observe " + enemy.getName() + "'s stats");
@@ -65,6 +77,7 @@ public class Dungeon {
                 String enter = scan.nextLine();
 
                 count++;
+                gained = false;
             }
 
             if (option == 2){

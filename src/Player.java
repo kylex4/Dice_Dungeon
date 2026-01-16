@@ -8,10 +8,6 @@ public class Player {
     private int value1;
     private int value2;
 
-//    public int getRerolls() {
-//        return rerolls;
-//    }
-
     public Player(String name){
         this.name = name;
         this.health = 30;
@@ -44,8 +40,13 @@ public class Player {
         return defense;
     }
 
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    //Prompts a message if a attack does no damage due to defense
     public void attacked(int damage, String dealer, boolean special){
-        if (!special) {
+        if (damage != -1) {
 
             if (damage > defense) {
                 health -= damage - defense;
@@ -61,6 +62,8 @@ public class Player {
         }
     }
 
+    // If the user rolls a double, reward them
+    // Both attacks should state the damage considering the opponents' defense without changing their defense yet
     public int attack1 (int value1, int value2, String target, int defense2){
         if (value1 == value2){
             System.out.println(name + " perfectly balances their defense and attack as all things should be...");
@@ -68,28 +71,28 @@ public class Player {
             value1 += 2;
             value2 += 2;
         }
-
-        damage = value1 - defense2;
-        defense = value2;
-        if (damage < 0){
-            damage = 0;
+        defense = value1;
+        damage = value2;
+        if (defense2 > damage){
+            defense2 = damage;
         }
         System.out.println(name + "'s defense becomes " + defense + "!");
-        System.out.println(name + " swings their sword at " + target + " dealing " + damage + " damage!");
+        System.out.println(name + " swings their sword at " + target + " dealing " + (damage - defense2) + " damage!");
         return damage;
     }
 
+    // Also rewards the user for rolling a double
     public int attack2 (int value1, int value2, String target, int defense2){
         if (value1 == value2){
             System.out.println(name + " perfectly balances their attack, increasing damage by an additional 4!");
             value1 += 2;
             value2 += 2;
         }
-        damage = value1 + value2 - defense2;
-        if (damage < 0){
-            damage = 0;
+        damage = value1 + value2;
+        if (defense2 > damage){
+            defense2 = damage;
         }
-        System.out.println(name + " strikes their sword at " + target + " dealing " + damage + " damage!");
+        System.out.println(name + " strikes their sword at " + target + " dealing " + (damage - defense2) + " damage!");
         return damage;
     }
 
@@ -100,8 +103,4 @@ public class Player {
         }
         return dead;
     }
-
-
-
-
 }

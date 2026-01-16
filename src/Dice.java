@@ -31,9 +31,9 @@ public class Dice {
         return dieNumber;
     }
 
-    // Earn a reroll every third turn
-    public void getReroll(int turn, String name){
-        if (turn % 3 == 0){
+    // Earn a reroll every third turn, prevents obtaining additional reroll by going back and forth between actions
+    public void gainReroll(int turn, String name, boolean gained){
+        if (turn % 3 == 0 && !gained){
             System.out.println(name + " gains a reroll!");
             System.out.println("");
             reroll++;
@@ -64,7 +64,7 @@ public class Dice {
         return dieNumber;
     }
 
-    // Prompts message to reroll only when there are avaliable rerolls. Can only reroll once per die
+    // Prompts message to reroll only when there are available rerolls. Can only reroll once per die
     public void reroll(int value, int rerolls, String character){
         if (rerolls > 0){
             System.out.println("");
@@ -90,9 +90,6 @@ public class Dice {
             if (option == 1 && value == 2){
                 value2 = dieNumber;
             }
-
-
-
         }else{
             if (value == 1){
                 value1 = dieNumber;
